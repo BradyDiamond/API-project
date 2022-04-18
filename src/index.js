@@ -9,21 +9,30 @@ $(document).ready(function() {
     $('#location').val("");
 
     let request = new XMLHttpRequest();
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=47b6e4f6da18dfaeecc5a984e1fc78c6
+    `;
+    // let error = new Error;
+
 
     request.onreadystatechange = function() {
       if (this.readyState === 4 && this.status === 200) {
         const response = JSON.parse(this.responseText);
         getElements(response);
       }
-    }
+      
+    };
 
     request.open("GET", url, true);
     request.send();
-
-    function getElements(response) {
+   
+  
+      function getElements(response) {
+      let farTemp = ((response.main.temp - 273.15) * 9/5 + 32).toFixed(2);
       $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
-      $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
+      $('.showTemp').text(`The temperature in fahrenheit is ${farTemp} degrees.`);
+    
     }
   });
 });
+
+
